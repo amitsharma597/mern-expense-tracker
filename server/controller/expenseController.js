@@ -8,4 +8,27 @@ const createExpense = async (req, res) => {
   }
 };
 
-module.exports = { createExpense };
+const getExpense = async (req, res) => {
+  try {
+    const expenses = await Expense.find();
+    res.status(200).json(expenses);
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+
+const getExpenseById = async (req, res) => {
+  try {
+    const expense = await Expense.findById(req.params.id);
+
+    if (!expense) {
+      return res.status(404).json("expense not found");
+    }
+
+    res.status(200).json(expense);
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+
+module.exports = { createExpense, getExpense, getExpenseById };

@@ -8,6 +8,7 @@ app.use("/api/expenses", expenseRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/expenses/:id", expenseRoutes);
 app.use("/api/expenses/:id", expenseRoutes);
+app.use("/api/expenses", expenseRoutes);
 
 app.get("/", (req, res) => {
   res.send("Expense Tracker API is running 🚀");

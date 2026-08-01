@@ -5,10 +5,12 @@ const {
   getExpense,
   getExpenseById,
   updateExpense,
+  deleteExpense,
 } = require("../controller/expenseController");
 
 router.post("/", createExpense);
 router.get("/", getExpense);
 router.get("/:id", getExpenseById);
 router.put("/:id", updateExpense);
+router.delete("/:id", deleteExpense);
 module.exports = router;

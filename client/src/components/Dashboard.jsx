@@ -1,4 +1,5 @@
 import Sidebar from "./Sidebar";
+import SummaryCards from "./SummaryCards";
 
 const Dashboard = () => {
   return (
@@ -6,8 +7,12 @@ const Dashboard = () => {
       <Sidebar />
 
       <main className="main-content">
-        <h1>Welcome Back 👋</h1>
-        <p>Track and manage your expenses efficiently.</p>
+        <div className="dashboard-header">
+          <h1>Welcome Back 👋</h1>
+          <p>Track and manage your expenses efficiently.</p>
+        </div>
+
+        <SummaryCards />
       </main>
     </div>
   );

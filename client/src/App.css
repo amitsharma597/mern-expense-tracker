@@ -465,7 +465,6 @@ body {
   gap: 1.5rem;
 }
 
-/* List Header & Search Box */
 .list-header {
   display: flex;
   justify-content: space-between;
@@ -474,48 +473,48 @@ body {
 }
 
 .list-header h2 {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--text-main);
 }
 
 .search-box {
   position: relative;
-  display: flex;
-  align-items: center;
-  max-width: 240px;
-  width: 100%;
+  width: 230px;
 }
 
 .search-box svg {
   position: absolute;
-  left: 12px;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--text-muted);
-  pointer-events: none;
 }
 
 .search-box input {
   width: 100%;
-  padding: 10px 12px 10px 40px;
-  background: var(--bg-body);
+  height: 44px;
+  padding-left: 42px;
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  font-size: 0.9rem;
+  background: var(--bg-card);
+  color: var(--text-main);
   outline: none;
   transition: var(--transition);
 }
 
 .search-box input:focus {
   border-color: var(--primary);
-  background: white;
   box-shadow: 0 0 0 4px var(--primary-light);
 }
 
-/* Expense Items Container */
 .expense-items {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow-y: auto;
+  max-height: 500px;
+  padding-right: 4px;
 }
 
 /* Individual Expense Card */
@@ -523,10 +522,14 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.25rem;
+  gap: 1rem;
+
+  padding: 1rem 1.2rem;
+
   background: var(--bg-body);
   border-radius: 16px;
   border: 1px solid transparent;
+
   transition: var(--transition);
 }
 
@@ -534,36 +537,42 @@ body {
   background: white;
   border-color: var(--primary-light);
   transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
-
 /* Left Side: Icon and Info */
 .expense-info {
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex: 1;
 }
 
 .expense-icon {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
+
+  border-radius: 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   background: white;
   color: var(--primary);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+
+  flex-shrink: 0;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
 .expense-info h3 {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-main);
 }
 
 .expense-info p {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--text-muted);
 }
 
@@ -571,54 +580,66 @@ body {
 .expense-actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
-.expense-actions .amount {
+.amount {
   font-size: 1rem;
   font-weight: 700;
   color: var(--text-main);
-  margin-right: 0.5rem;
+  min-width: 55px;
+  text-align: right;
 }
 
 .expense-actions button {
-  background: white;
-  border: 1px solid var(--border-color);
-  color: var(--text-muted);
   width: 34px;
   height: 34px;
-  border-radius: 8px;
+
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+
+  background: white;
+
+  color: var(--text-muted);
   cursor: pointer;
+
   transition: var(--transition);
 }
 
-.expense-actions button:hover {
+.expense-actions button:first-of-type:hover {
   background: var(--primary-light);
   color: var(--primary);
   border-color: var(--primary);
 }
 
-.expense-actions button:last-child:hover {
-  background: #fee2e2; /* light red */
+.expense-actions button:last-of-type:hover {
+  background: #fee2e2;
   color: var(--error);
   border-color: var(--error);
 }
 
 /* Responsive Adjustments for List */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .list-header {
     flex-direction: column;
     align-items: flex-start;
   }
 
   .search-box {
-    max-width: 100%;
+    width: 100%;
   }
 
-  .expense-actions .amount {
-    font-size: 0.9rem;
+  .expense-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .expense-actions {
+    width: 100%;
+    justify-content: space-between;
   }
 }

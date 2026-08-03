@@ -1,5 +1,6 @@
 import Sidebar from "./Sidebar";
 import SummaryCards from "./SummaryCards";
+import ExpenseForm from "./ExpenseForm";
 
 const Dashboard = () => {
   return (
@@ -13,6 +14,12 @@ const Dashboard = () => {
         </div>
 
         <SummaryCards />
+
+        <div className="content-grid">
+          <ExpenseForm />
+
+          <div>Expense List Coming Soon...</div>
+        </div>
       </main>
     </div>
   );

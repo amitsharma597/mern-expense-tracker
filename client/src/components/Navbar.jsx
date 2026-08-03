@@ -1,9 +1,9 @@
-import { Wallet, Search, Moon } from "lucide-react";
+import { Wallet, Moon } from "lucide-react";
 
 const Navbar = () => {
   return (
     <header className="navbar">
-      <div className="logo">
+      <div className="navbar-left">
         <div className="logo-icon">
           <Wallet size={22} strokeWidth={2.3} />
         </div>
@@ -15,11 +15,6 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-right">
-        <div className="search-box">
-          <Search size={18} />
-          <input type="text" placeholder="Search expenses..." />
-        </div>
-
         <button className="theme-btn">
           <Moon size={19} />
         </button>

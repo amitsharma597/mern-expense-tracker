@@ -1,6 +1,40 @@
 import { Wallet, FileText, Tag, ChevronDown, Plus } from "lucide-react";
+import { useState } from "react";
+import { createExpenses } from "../api/expenseApi";
 
 const ExpenseForm = () => {
+  const [expense, setExpense] = useState({
+    title: "",
+    amount: "",
+    category: "",
+    date: "",
+    description: "",
+  });
+
+  const handleChange = (e) => {
+    setExpense({
+      ...expense,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await createExpenses(expense);
+
+      setExpense({
+        title: "",
+        amount: "",
+        category: "",
+        date: "",
+        description: "",
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className="expense-form">
       <div className="form-header">
@@ -14,12 +48,19 @@ const ExpenseForm = () => {
         </div>
       </div>
 
-      <form className="expense-form-grid">
+      <form className="expense-form-grid" onSubmit={handleSubmit}>
         <div className="form-group">
           <p>Title</p>
 
           <div className="input-box">
-            <input type="text" placeholder="Enter expense title" />
+            <input
+              type="text"
+              name="title"
+              value={expense.title}
+              onChange={handleChange}
+              placeholder="Enter expense title"
+            />
+
             <FileText size={18} />
           </div>
         </div>
@@ -29,7 +70,14 @@ const ExpenseForm = () => {
 
           <div className="input-box">
             <span className="currency">₹</span>
-            <input type="number" placeholder="Enter amount" />
+
+            <input
+              type="number"
+              name="amount"
+              value={expense.amount}
+              onChange={handleChange}
+              placeholder="Enter amount"
+            />
           </div>
         </div>
 
@@ -39,17 +87,22 @@ const ExpenseForm = () => {
           <div className="input-box select-box">
             <Tag size={18} />
 
-            <select defaultValue="">
+            <select
+              name="category"
+              value={expense.category}
+              onChange={handleChange}
+            >
               <option value="" disabled>
                 Select Category
               </option>
-              <option>Food</option>
-              <option>Shopping</option>
-              <option>Travel</option>
-              <option>Bills</option>
-              <option>Entertainment</option>
-              <option>Health</option>
-              <option>Other</option>
+
+              <option value="Food">Food</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Travel">Travel</option>
+              <option value="Bills">Bills</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Health">Health</option>
+              <option value="Other">Other</option>
             </select>
 
             <ChevronDown size={18} className="select-arrow" />
@@ -60,7 +113,12 @@ const ExpenseForm = () => {
           <p>Date</p>
 
           <div className="input-box">
-            <input type="date" />
+            <input
+              type="date"
+              name="date"
+              value={expense.date}
+              onChange={handleChange}
+            />
           </div>
         </div>
 
@@ -68,7 +126,13 @@ const ExpenseForm = () => {
           <p>Description (Optional)</p>
 
           <div className="input-box">
-            <input type="text" placeholder="Add a note about this expense..." />
+            <input
+              type="text"
+              name="description"
+              value={expense.description}
+              onChange={handleChange}
+              placeholder="Add a note about this expense..."
+            />
           </div>
         </div>
 

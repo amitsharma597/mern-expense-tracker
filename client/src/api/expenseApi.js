@@ -10,4 +10,20 @@ const getExpenses = async () => {
   return response.json();
 };
 
-export { getExpenses };
+const createExpenses = async (expense) => {
+  const response = await fetch(BASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(expense),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create expenses");
+  }
+
+  return response.json();
+};
+
+export { getExpenses, createExpenses };

@@ -25,5 +25,14 @@ const createExpenses = async (expense) => {
 
   return response.json();
 };
+const deleteExpense = async (id) => {
+  const response = await fetch(`${BASE_URL}/${id}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to create expenses");
+  }
+  return response.json();
+};
 
-export { getExpenses, createExpenses };
+export { getExpenses, createExpenses, deleteExpense };

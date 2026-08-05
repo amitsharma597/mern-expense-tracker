@@ -2,7 +2,7 @@ import { Wallet, FileText, Tag, ChevronDown, Plus } from "lucide-react";
 import { useState } from "react";
 import { createExpenses } from "../api/expenseApi";
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ fetchExpenses }) => {
   const [expense, setExpense] = useState({
     title: "",
     amount: "",
@@ -17,11 +17,14 @@ const ExpenseForm = () => {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await createExpenses(expense);
+
+      await fetchExpenses();
 
       setExpense({
         title: "",

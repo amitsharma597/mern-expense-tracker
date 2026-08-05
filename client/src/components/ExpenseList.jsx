@@ -1,24 +1,15 @@
-import { useEffect, useState } from "react";
 import { Search, Pencil, Trash2, Utensils } from "lucide-react";
-import { getExpenses } from "../api/expenseApi";
+import { deleteExpense } from "../api/expenseApi";
 
-const ExpenseList = () => {
-  const [expenses, setExpenses] = useState([]);
-
-  useEffect(() => {
-    const fetchExpenses = async () => {
-      try {
-        const data = await getExpenses();
-        console.log(data);
-        setExpenses(data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-
-    fetchExpenses();
-  }, []);
-
+const ExpenseList = (props) => {
+  const handleDelete = async (id) => {
+    try {
+      await deleteExpense(id);
+      await props.fetchExpenses();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
     <div className="expense-list">
       <div className="list-header">
@@ -31,8 +22,8 @@ const ExpenseList = () => {
       </div>
 
       <div className="expense-items">
-        {expenses.length > 0 ? (
-          expenses.map((expense) => (
+        {props.expenses.length > 0 ? (
+          props.expenses.map((expense) => (
             <div className="expense-card" key={expense._id}>
               <div className="expense-info">
                 <div className="expense-icon">
@@ -46,6 +37,7 @@ const ExpenseList = () => {
                     {expense.category} •{" "}
                     {new Date(expense.date).toLocaleDateString("en-IN")}
                   </p>
+                  {expense.description && <small>{expense.description}</small>}
                 </div>
               </div>
 
@@ -56,7 +48,11 @@ const ExpenseList = () => {
                   <Pencil size={16} />
                 </button>
 
-                <button>
+                <button
+                  onClick={() => {
+                    handleDelete(expense._id);
+                  }}
+                >
                   <Trash2 size={16} />
                 </button>
               </div>

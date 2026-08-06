@@ -44,7 +44,11 @@ const ExpenseList = (props) => {
               <div className="expense-actions">
                 <span className="amount">₹{expense.amount}</span>
 
-                <button>
+                <button
+                  onClick={() => {
+                    props.setEditingExpense(expense);
+                  }}
+                >
                   <Pencil size={16} />
                 </button>
 

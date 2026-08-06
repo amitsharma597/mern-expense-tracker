@@ -1,4 +1,5 @@
 const Expense = require("../models/Expense");
+
 const createExpense = async (req, res) => {
   try {
     const expense = await Expense.create(req.body);
@@ -48,6 +49,7 @@ const updateExpense = async (req, res) => {
     res.status(500).json(error.message);
   }
 };
+
 const deleteExpense = async (req, res) => {
   try {
     const expense = await Expense.findByIdAndDelete(req.params.id);

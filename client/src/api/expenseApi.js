@@ -22,9 +22,8 @@ const createExpenses = async (expense) => {
   if (!response.ok) {
     throw new Error("Failed to create expenses");
   }
-
-  return response.json();
 };
+
 const deleteExpense = async (id) => {
   const response = await fetch(`${BASE_URL}/${id}`, {
     method: "DELETE",
@@ -32,7 +31,20 @@ const deleteExpense = async (id) => {
   if (!response.ok) {
     throw new Error("Failed to create expenses");
   }
-  return response.json();
 };
 
-export { getExpenses, createExpenses, deleteExpense };
+const updateExpense = async (id, expense) => {
+  const response = await fetch(`${BASE_URL}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(expense),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update expense");
+  }
+};
+
+export { getExpenses, createExpenses, deleteExpense, updateExpense };

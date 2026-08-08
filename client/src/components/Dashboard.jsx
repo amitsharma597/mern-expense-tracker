@@ -32,7 +32,7 @@ const Dashboard = () => {
           <p>Track and manage your expenses efficiently.</p>
         </div>
 
-        <SummaryCards />
+        <SummaryCards expenses={expenses} />
 
         <div className="content-grid">
           <ExpenseForm

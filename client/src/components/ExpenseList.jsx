@@ -1,11 +1,11 @@
 import { Search, Pencil, Trash2, Utensils } from "lucide-react";
 import { deleteExpense } from "../api/expenseApi";
 
-const ExpenseList = (props) => {
+const ExpenseList = ({ expenses, fetchExpenses, setEditingExpense }) => {
   const handleDelete = async (id) => {
     try {
       await deleteExpense(id);
-      await props.fetchExpenses();
+      await fetchExpenses();
     } catch (error) {
       console.log(error.message);
     }
@@ -22,8 +22,8 @@ const ExpenseList = (props) => {
       </div>
 
       <div className="expense-items">
-        {props.expenses.length > 0 ? (
-          props.expenses.map((expense) => (
+        {expenses.length > 0 ? (
+          expenses.map((expense) => (
             <div className="expense-card" key={expense._id}>
               <div className="expense-info">
                 <div className="expense-icon">
@@ -46,7 +46,7 @@ const ExpenseList = (props) => {
 
                 <button
                   onClick={() => {
-                    props.setEditingExpense(expense);
+                    setEditingExpense(expense);
                   }}
                 >
                   <Pencil size={16} />

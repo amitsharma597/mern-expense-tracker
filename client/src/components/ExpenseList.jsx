@@ -1,15 +1,29 @@
 import { Search, Pencil, Trash2, Utensils } from "lucide-react";
+import { useState } from "react";
 import { deleteExpense } from "../api/expenseApi";
 
-const ExpenseList = ({ expenses, fetchExpenses, setEditingExpense }) => {
+const ExpenseList = (props) => {
+  const [search, setSearch] = useState("");
+
   const handleDelete = async (id) => {
     try {
       await deleteExpense(id);
-      await fetchExpenses();
+      await props.fetchExpenses();
     } catch (error) {
       console.log(error.message);
     }
   };
+
+  const filteredExpenses = props.expenses.filter((expense) => {
+    const searchText = search.toLowerCase();
+
+    return (
+      expense.title.toLowerCase().includes(searchText) ||
+      expense.category.toLowerCase().includes(searchText) ||
+      expense.description?.toLowerCase().includes(searchText)
+    );
+  });
+
   return (
     <div className="expense-list">
       <div className="list-header">
@@ -17,13 +31,19 @@ const ExpenseList = ({ expenses, fetchExpenses, setEditingExpense }) => {
 
         <div className="search-box">
           <Search size={18} />
-          <input type="text" placeholder="Search expense..." />
+
+          <input
+            type="text"
+            placeholder="Search expense..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
       </div>
 
       <div className="expense-items">
-        {expenses.length > 0 ? (
-          expenses.map((expense) => (
+        {filteredExpenses.length > 0 ? (
+          filteredExpenses.map((expense) => (
             <div className="expense-card" key={expense._id}>
               <div className="expense-info">
                 <div className="expense-icon">
@@ -37,6 +57,7 @@ const ExpenseList = ({ expenses, fetchExpenses, setEditingExpense }) => {
                     {expense.category} •{" "}
                     {new Date(expense.date).toLocaleDateString("en-IN")}
                   </p>
+
                   {expense.description && <small>{expense.description}</small>}
                 </div>
               </div>
@@ -44,11 +65,7 @@ const ExpenseList = ({ expenses, fetchExpenses, setEditingExpense }) => {
               <div className="expense-actions">
                 <span className="amount">₹{expense.amount}</span>
 
-                <button
-                  onClick={() => {
-                    setEditingExpense(expense);
-                  }}
-                >
+                <button>
                   <Pencil size={16} />
                 </button>
 

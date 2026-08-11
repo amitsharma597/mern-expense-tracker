@@ -27,13 +27,75 @@ const Dashboard = () => {
       <Sidebar />
 
       <main className="main-content">
-        <div className="dashboard-header">
-          <h1>Welcome Back 👋</h1>
-          <p>Track and manage your expenses efficiently.</p>
-        </div>
+        {/* Hero Section */}
+        <section className="dashboard-hero">
+          <div className="hero-content">
+            <span className="hero-label">SMARTER MONEY MANAGEMENT</span>
 
+            <h1>
+              Take control of
+              <span> your spending.</span>
+            </h1>
+
+            <p>
+              Track every expense, understand your spending habits, and make
+              smarter financial decisions — all in one place.
+            </p>
+
+            <div className="hero-actions">
+              <button className="hero-btn">Add Expense</button>
+
+              <button className="hero-secondary-btn">View Analytics →</button>
+            </div>
+          </div>
+
+          <div className="hero-visual">
+            <div className="hero-visual-card">
+              <span>Monthly Spending</span>
+              <strong>₹2,350</strong>
+              <small>Keep tracking your progress</small>
+            </div>
+          </div>
+        </section>
+
+        {/* Value Section */}
+        <section className="value-section">
+          <div className="value-header">
+            <span className="hero-label">WHY EXPENSE TRACKER</span>
+
+            <h2>Make every rupee count.</h2>
+
+            <p>
+              Stay aware of where your money goes and build better financial
+              habits over time.
+            </p>
+          </div>
+
+          <div className="value-grid">
+            <div className="value-item">
+              <span>⚡</span>
+              <h3>Quick Tracking</h3>
+              <p>Add expenses in seconds and keep everything organized.</p>
+            </div>
+
+            <div className="value-item">
+              <span>📊</span>
+              <h3>Clear Insights</h3>
+              <p>Understand your spending patterns at a glance.</p>
+            </div>
+
+            <div className="value-item">
+              <span>🎯</span>
+              <h3>Better Decisions</h3>
+              <p>Use your spending history to make smarter choices.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Summary */}
         <SummaryCards expenses={expenses} />
 
+        {/* Expense Section */}
         <div className="content-grid">
           <ExpenseForm
             fetchExpenses={fetchExpenses}

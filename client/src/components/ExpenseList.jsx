@@ -1,9 +1,32 @@
-import { Search, Pencil, Trash2, Utensils } from "lucide-react";
+import {
+  Search,
+  Pencil,
+  Trash2,
+  Utensils,
+  ShoppingCart,
+  Car,
+  Home,
+  HeartPulse,
+  Gamepad2,
+  GraduationCap,
+  Receipt,
+  CircleDollarSign,
+} from "lucide-react";
 import { useState } from "react";
 import { deleteExpense } from "../api/expenseApi";
 
 const ExpenseList = (props) => {
   const [search, setSearch] = useState("");
+  const categoryIcons = {
+    Food: Utensils,
+    Shopping: ShoppingCart,
+    Transport: Car,
+    Housing: Home,
+    Health: HeartPulse,
+    Entertainment: Gamepad2,
+    Education: GraduationCap,
+    Bills: Receipt,
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -47,7 +70,11 @@ const ExpenseList = (props) => {
             <div className="expense-card" key={expense._id}>
               <div className="expense-info">
                 <div className="expense-icon">
-                  <Utensils size={18} />
+                  {(() => {
+                    const Icon =
+                      categoryIcons[expense.category] || CircleDollarSign;
+                    return <Icon size={18} />;
+                  })()}
                 </div>
 
                 <div>

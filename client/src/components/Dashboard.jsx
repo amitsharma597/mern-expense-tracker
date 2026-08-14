@@ -5,7 +5,7 @@ import ExpenseForm from "./ExpenseForm";
 import ExpenseList from "./ExpenseList";
 import { getExpenses } from "../api/expenseApi";
 
-const Dashboard = () => {
+const Dashboard = ({ sidebarOpen, setSidebarOpen }) => {
   const [expenses, setExpenses] = useState([]);
   const [editingExpense, setEditingExpense] = useState(null);
 
@@ -23,11 +23,13 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="dashboard">
-      <Sidebar />
+    <div className={`dashboard ${sidebarOpen ? "sidebar-active" : ""}`}>
+      <Sidebar
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+      />
 
       <main className="main-content">
-        {/* Hero Section */}
         <section className="dashboard-hero">
           <div className="hero-content">
             <span className="hero-label">SMARTER MONEY MANAGEMENT</span>
@@ -44,7 +46,6 @@ const Dashboard = () => {
 
             <div className="hero-actions">
               <button className="hero-btn">Add Expense</button>
-
               <button className="hero-secondary-btn">View Analytics →</button>
             </div>
           </div>
@@ -58,7 +59,6 @@ const Dashboard = () => {
           </div>
         </section>
 
-        {/* Value Section */}
         <section className="value-section">
           <div className="value-header">
             <span className="hero-label">WHY EXPENSE TRACKER</span>
@@ -92,10 +92,8 @@ const Dashboard = () => {
           </div>
         </section>
 
-        {/* Summary */}
         <SummaryCards expenses={expenses} />
 
-        {/* Expense Section */}
         <div className="content-grid">
           <ExpenseForm
             fetchExpenses={fetchExpenses}

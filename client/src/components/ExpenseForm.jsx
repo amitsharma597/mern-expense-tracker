@@ -1,8 +1,8 @@
 import { Wallet, FileText, Tag, ChevronDown, Plus } from "lucide-react";
-import { useState, useEffect } from "react";
-import { createExpenses, updateExpense } from "../api/expenseApi";
+import { useState } from "react";
+import { createExpenses } from "../api/expenseApi";
 
-const ExpenseForm = ({ fetchExpenses, editingExpense, setEditingExpense }) => {
+const ExpenseForm = ({ fetchExpenses }) => {
   const [expense, setExpense] = useState({
     title: "",
     amount: "",
@@ -10,17 +10,6 @@ const ExpenseForm = ({ fetchExpenses, editingExpense, setEditingExpense }) => {
     date: "",
     description: "",
   });
-  useEffect(() => {
-    if (editingExpense) {
-      setExpense({
-        title: editingExpense.title,
-        amount: editingExpense.amount,
-        category: editingExpense.category,
-        date: editingExpense.date.split("T")[0],
-        description: editingExpense.description || "",
-      });
-    }
-  }, [editingExpense]);
 
   const handleChange = (e) => {
     setExpense({
@@ -31,12 +20,9 @@ const ExpenseForm = ({ fetchExpenses, editingExpense, setEditingExpense }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      if (editingExpense) {
-        await updateExpense(editingExpense._id, expense);
-      } else {
-        await createExpenses(expense);
-      }
+      await createExpenses(expense);
 
       await fetchExpenses();
 
@@ -47,8 +33,6 @@ const ExpenseForm = ({ fetchExpenses, editingExpense, setEditingExpense }) => {
         date: "",
         description: "",
       });
-
-      setEditingExpense(null);
     } catch (error) {
       console.log(error.message);
     }

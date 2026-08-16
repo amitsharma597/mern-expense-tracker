@@ -1,30 +1,36 @@
-import { Wallet, Moon, Menu, X } from "lucide-react";
+import { Wallet, Moon, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
 
-const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
+const Navbar = () => {
+  const [isDark, setIsDark] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDark);
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  }, [isDark]);
+
   return (
     <header className="navbar">
       <div className="navbar-left">
-        <button
-          className="menu-btn"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          aria-label="Toggle sidebar"
-        >
-          {sidebarOpen ? <X size={21} /> : <Menu size={21} />}
-        </button>
-
         <div className="logo-icon">
           <Wallet size={22} strokeWidth={2.3} />
         </div>
 
-        <div className="navbar-title">
+        <div>
           <h2>Expense Tracker</h2>
           <p>Manage your finances smarter</p>
         </div>
       </div>
 
       <div className="navbar-right">
-        <button className="theme-btn">
-          <Moon size={19} />
+        <button
+          className="theme-btn"
+          onClick={() => setIsDark((prev) => !prev)}
+          aria-label="Toggle theme"
+        >
+          {isDark ? <Sun size={19} /> : <Moon size={19} />}
         </button>
 
         <div className="avatar">A</div>

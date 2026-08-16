@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
+import "./App.css"
 
 const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);

@@ -1,9 +1,5 @@
-import {
-  LayoutDashboard,
-  Wallet,
-  ChartColumn,
-  Settings,
-} from "lucide-react";
+import { LayoutDashboard, Wallet, ChartColumn, Settings } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const closeSidebar = () => {
@@ -18,25 +14,25 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
       <aside className={`sidebar ${sidebarOpen ? "sidebar-open" : ""}`}>
         <nav className="sidebar-nav">
-          <button className="sidebar-link active" onClick={closeSidebar}>
+          <Link to="/" className="sidebar-link active" onClick={closeSidebar}>
             <LayoutDashboard size={20} />
             <span>Dashboard</span>
-          </button>
+          </Link>
 
-          <button className="sidebar-link" onClick={closeSidebar}>
+          <Link to="/expenses" className="sidebar-link" onClick={closeSidebar}>
             <Wallet size={20} />
             <span>Expenses</span>
-          </button>
+          </Link>
 
-          <button className="sidebar-link" onClick={closeSidebar}>
+          <Link to="/analytics" className="sidebar-link" onClick={closeSidebar}>
             <ChartColumn size={20} />
             <span>Analytics</span>
-          </button>
+          </Link>
 
-          <button className="sidebar-link" onClick={closeSidebar}>
+          <Link to="/settings" className="sidebar-link" onClick={closeSidebar}>
             <Settings size={20} />
             <span>Settings</span>
-          </button>
+          </Link>
         </nav>
       </aside>
     </>

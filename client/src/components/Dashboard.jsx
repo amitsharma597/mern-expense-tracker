@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import Sidebar from "./Sidebar";
 import SummaryCards from "./SummaryCards";
 import ExpenseForm from "./ExpenseForm";
 import ExpenseList from "./ExpenseList";
 import { getExpenses } from "../api/expenseApi";
 
-const Dashboard = ({ sidebarOpen, setSidebarOpen }) => {
+const Dashboard = ({ sidebarOpen }) => {
   const [expenses, setExpenses] = useState([]);
   const [editingExpense, setEditingExpense] = useState(null);
 
@@ -24,11 +23,6 @@ const Dashboard = ({ sidebarOpen, setSidebarOpen }) => {
 
   return (
     <div className={`dashboard ${sidebarOpen ? "sidebar-active" : ""}`}>
-      <Sidebar
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-      />
-
       <main className="main-content">
         <section className="dashboard-hero">
           <div className="hero-content">

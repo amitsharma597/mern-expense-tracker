@@ -21,6 +21,13 @@ const Dashboard = ({ sidebarOpen }) => {
     fetchExpenses();
   }, []);
 
+  const scrollToExpenseForm = () => {
+    document.getElementById("expense-form-section")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   return (
     <div className={`dashboard ${sidebarOpen ? "sidebar-active" : ""}`}>
       <main className="main-content">
@@ -39,7 +46,10 @@ const Dashboard = ({ sidebarOpen }) => {
             </p>
 
             <div className="hero-actions">
-              <button className="hero-btn">Add Expense</button>
+              <button className="hero-btn" onClick={scrollToExpenseForm}>
+                Add Expense
+              </button>
+
               <button className="hero-secondary-btn">View Analytics →</button>
             </div>
           </div>
@@ -88,7 +98,7 @@ const Dashboard = ({ sidebarOpen }) => {
 
         <SummaryCards expenses={expenses} />
 
-        <div className="content-grid">
+        <div className="content-grid" id="expense-form-section">
           <ExpenseForm
             fetchExpenses={fetchExpenses}
             editingExpense={editingExpense}

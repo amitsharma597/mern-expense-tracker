@@ -42,6 +42,7 @@ const Expenses = () => {
     Food: Utensils,
     Shopping: ShoppingCart,
     Transport: Car,
+    Travel: Car,
     Housing: Home,
     Health: HeartPulse,
     Entertainment: Gamepad2,
@@ -62,7 +63,7 @@ const Expenses = () => {
     fetchExpenses();
   }, []);
 
-  const resetForm = () => {
+  const clearForm = () => {
     setExpense({
       title: "",
       amount: "",
@@ -72,7 +73,16 @@ const Expenses = () => {
     });
 
     setEditingExpense(null);
+  };
+
+  const closeForm = () => {
+    clearForm();
     setShowForm(false);
+  };
+
+  const openAddForm = () => {
+    clearForm();
+    setShowForm(true);
   };
 
   const handleChange = (e) => {
@@ -93,7 +103,7 @@ const Expenses = () => {
       }
 
       await fetchExpenses();
-      resetForm();
+      closeForm();
     } catch (error) {
       console.log(error.message);
     }
@@ -103,14 +113,19 @@ const Expenses = () => {
     setEditingExpense(item);
 
     setExpense({
-      title: item.title,
-      amount: item.amount,
-      category: item.category,
-      date: item.date?.split("T")[0] || "",
+      title: item.title || "",
+      amount: item.amount || "",
+      category: item.category || "",
+      date: item.date ? item.date.split("T")[0] : "",
       description: item.description || "",
     });
 
     setShowForm(true);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const handleDelete = async (id) => {
@@ -124,168 +139,170 @@ const Expenses = () => {
 
   return (
     <main className="expenses-page">
-      <div className="expenses-page-header">
+      <section className="expenses-page-header">
         <div>
           <span className="expenses-label">EXPENSE MANAGEMENT</span>
+
           <h1>Manage your expenses.</h1>
+
           <p>Track, update and organize all your spending in one place.</p>
         </div>
 
-        <button
-          className="expenses-add-btn"
-          onClick={() => {
-            setEditingExpense(null);
-            setExpense({
-              title: "",
-              amount: "",
-              category: "",
-              date: "",
-              description: "",
-            });
-            setShowForm(true);
-          }}
-        >
+        <button className="expenses-add-btn" onClick={openAddForm}>
           <Plus size={19} />
           Add Expense
         </button>
-      </div>
+      </section>
 
+      {/* FORM ONLY APPEARS AFTER ADD / EDIT */}
       {showForm && (
-        <section className="expenses-form-card">
-          <div className="expenses-form-header">
-            <div className="expenses-form-title">
-              <div className="expenses-form-icon">
-                <Wallet size={21} />
+        <div className="expenses-form-overlay">
+          <section className="expenses-form-card">
+            <div className="expenses-form-header">
+              <div className="expenses-form-title">
+                <div className="expenses-form-icon">
+                  <Wallet size={20} />
+                </div>
+
+                <div>
+                  <h2>{editingExpense ? "Edit Expense" : "Add New Expense"}</h2>
+
+                  <p>
+                    {editingExpense
+                      ? "Update your expense details"
+                      : "Enter your expense details"}
+                  </p>
+                </div>
               </div>
 
-              <div>
-                <h2>{editingExpense ? "Edit Expense" : "Add New Expense"}</h2>
-                <p>
-                  {editingExpense
-                    ? "Update your expense details"
-                    : "Enter your expense details"}
-                </p>
-              </div>
-            </div>
-
-            <button className="expenses-close-btn" onClick={resetForm}>
-              <X size={19} />
-            </button>
-          </div>
-
-          <form className="expenses-form-grid" onSubmit={handleSubmit}>
-            <div className="expenses-field">
-              <label>Title</label>
-
-              <div className="expenses-input">
-                <input
-                  type="text"
-                  name="title"
-                  value={expense.title}
-                  onChange={handleChange}
-                  placeholder="Enter expense title"
-                  required
-                />
-
-                <FileText size={17} />
-              </div>
-            </div>
-
-            <div className="expenses-field">
-              <label>Amount</label>
-
-              <div className="expenses-input">
-                <span className="expenses-currency">₹</span>
-
-                <input
-                  type="number"
-                  name="amount"
-                  value={expense.amount}
-                  onChange={handleChange}
-                  placeholder="Enter amount"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="expenses-field">
-              <label>Category</label>
-
-              <div className="expenses-input expenses-select">
-                <Tag size={17} />
-
-                <select
-                  name="category"
-                  value={expense.category}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="" disabled>
-                    Select Category
-                  </option>
-                  <option value="Food">Food</option>
-                  <option value="Shopping">Shopping</option>
-                  <option value="Travel">Travel</option>
-                  <option value="Bills">Bills</option>
-                  <option value="Entertainment">Entertainment</option>
-                  <option value="Health">Health</option>
-                  <option value="Other">Other</option>
-                </select>
-
-                <ChevronDown size={17} />
-              </div>
-            </div>
-
-            <div className="expenses-field">
-              <label>Date</label>
-
-              <div className="expenses-input">
-                <input
-                  type="date"
-                  name="date"
-                  value={expense.date}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="expenses-field expenses-field-full">
-              <label>Description</label>
-
-              <div className="expenses-input">
-                <input
-                  type="text"
-                  name="description"
-                  value={expense.description}
-                  onChange={handleChange}
-                  placeholder="Add a note about this expense..."
-                />
-              </div>
-            </div>
-
-            <div className="expenses-form-actions">
               <button
                 type="button"
-                className="expenses-cancel-btn"
-                onClick={resetForm}
+                className="expenses-close-btn"
+                onClick={closeForm}
+                aria-label="Close form"
               >
-                Cancel
-              </button>
-
-              <button type="submit" className="expenses-save-btn">
-                <Plus size={18} />
-                {editingExpense ? "Update Expense" : "Save Expense"}
+                <X size={18} />
               </button>
             </div>
-          </form>
-        </section>
+
+            <form className="expenses-form-grid" onSubmit={handleSubmit}>
+              <div className="expenses-field">
+                <label>Title</label>
+
+                <div className="expenses-input">
+                  <input
+                    type="text"
+                    name="title"
+                    value={expense.title}
+                    onChange={handleChange}
+                    placeholder="Expense title"
+                    required
+                  />
+
+                  <FileText size={16} />
+                </div>
+              </div>
+
+              <div className="expenses-field">
+                <label>Amount</label>
+
+                <div className="expenses-input">
+                  <span className="expenses-currency">₹</span>
+
+                  <input
+                    type="number"
+                    name="amount"
+                    value={expense.amount}
+                    onChange={handleChange}
+                    placeholder="Amount"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="expenses-field">
+                <label>Category</label>
+
+                <div className="expenses-input expenses-select">
+                  <Tag size={16} />
+
+                  <select
+                    name="category"
+                    value={expense.category}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="" disabled>
+                      Select category
+                    </option>
+
+                    <option value="Food">Food</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Bills">Bills</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Health">Health</option>
+                    <option value="Other">Other</option>
+                  </select>
+
+                  <ChevronDown size={16} />
+                </div>
+              </div>
+
+              <div className="expenses-field">
+                <label>Date</label>
+
+                <div className="expenses-input">
+                  <input
+                    type="date"
+                    name="date"
+                    value={expense.date}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="expenses-field expenses-field-full">
+                <label>Description</label>
+
+                <div className="expenses-input">
+                  <input
+                    type="text"
+                    name="description"
+                    value={expense.description}
+                    onChange={handleChange}
+                    placeholder="Optional note..."
+                  />
+                </div>
+              </div>
+
+              <div className="expenses-form-actions">
+                <button
+                  type="button"
+                  className="expenses-cancel-btn"
+                  onClick={closeForm}
+                >
+                  Cancel
+                </button>
+
+                <button type="submit" className="expenses-save-btn">
+                  <Plus size={17} />
+
+                  {editingExpense ? "Update Expense" : "Save Expense"}
+                </button>
+              </div>
+            </form>
+          </section>
+        </div>
       )}
 
+      {/* EXPENSE LIST */}
       <section className="expenses-list-section">
         <div className="expenses-list-header">
           <div>
             <span className="expenses-section-label">YOUR EXPENSES</span>
+
             <h2>All expenses</h2>
           </div>
 
@@ -306,18 +323,22 @@ const Expenses = () => {
                       <Icon size={20} />
                     </div>
 
-                    <div className="expense-page-category">{item.category}</div>
+                    <span className="expense-page-category">
+                      {item.category}
+                    </span>
                   </div>
 
                   <div className="expense-page-info">
                     <h3>{item.title}</h3>
 
                     <p>
-                      {new Date(item.date).toLocaleDateString("en-IN", {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      })}
+                      {item.date
+                        ? new Date(item.date).toLocaleDateString("en-IN", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          })
+                        : "No date"}
                     </p>
 
                     {item.description && <small>{item.description}</small>}
@@ -328,19 +349,21 @@ const Expenses = () => {
 
                     <div className="expense-page-actions">
                       <button
+                        type="button"
                         className="expense-edit-btn"
                         onClick={() => handleEdit(item)}
                         aria-label="Edit expense"
                       >
-                        <Pencil size={16} />
+                        <Pencil size={15} />
                       </button>
 
                       <button
+                        type="button"
                         className="expense-delete-btn"
                         onClick={() => handleDelete(item._id)}
                         aria-label="Delete expense"
                       >
-                        <Trash2 size={16} />
+                        <Trash2 size={15} />
                       </button>
                     </div>
                   </div>
@@ -351,13 +374,12 @@ const Expenses = () => {
         ) : (
           <div className="expenses-empty">
             <Wallet size={38} />
+
             <h3>No expenses yet</h3>
+
             <p>Add your first expense to start tracking your spending.</p>
 
-            <button
-              className="expenses-empty-btn"
-              onClick={() => setShowForm(true)}
-            >
+            <button className="expenses-empty-btn" onClick={openAddForm}>
               <Plus size={17} />
               Add First Expense
             </button>

@@ -19,7 +19,10 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Dashboard sidebarOpen={sidebarOpen} />} />
-        <Route path="/expenses" element={<Expenses />} />
+        <Route
+          path="/expenses"
+          element={<Expenses sidebarOpen={sidebarOpen} />}
+        />
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/settings" element={<Settings />} />
       </Routes>

@@ -6,7 +6,6 @@ import { getExpenses } from "../api/expenseApi";
 
 const Dashboard = ({ sidebarOpen }) => {
   const [expenses, setExpenses] = useState([]);
-  const [editingExpense, setEditingExpense] = useState(null);
 
   const fetchExpenses = async () => {
     try {
@@ -99,17 +98,9 @@ const Dashboard = ({ sidebarOpen }) => {
         <SummaryCards expenses={expenses} />
 
         <div className="content-grid" id="expense-form-section">
-          <ExpenseForm
-            fetchExpenses={fetchExpenses}
-            editingExpense={editingExpense}
-            setEditingExpense={setEditingExpense}
-          />
+          <ExpenseForm fetchExpenses={fetchExpenses} />
 
-          <ExpenseList
-            expenses={expenses}
-            fetchExpenses={fetchExpenses}
-            setEditingExpense={setEditingExpense}
-          />
+          <ExpenseList expenses={expenses} fetchExpenses={fetchExpenses} />
         </div>
       </main>
     </div>

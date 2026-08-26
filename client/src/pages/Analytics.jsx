@@ -18,7 +18,6 @@ import {
   ArrowUpRight,
   Bot,
   Brain,
-  ChevronDown,
   Lightbulb,
   MessageCircle,
   Sparkles,
@@ -118,7 +117,6 @@ const Analytics = () => {
 
     filteredExpenses.forEach((expense) => {
       const date = new Date(expense.date);
-
       const key = date.toISOString().split("T")[0];
 
       grouped[key] = (grouped[key] || 0) + Number(expense.amount || 0);
@@ -149,7 +147,6 @@ const Analytics = () => {
     }
 
     const days = Number(period);
-
     const now = new Date();
 
     const currentStart = new Date(now);
@@ -168,7 +165,9 @@ const Analytics = () => {
   }, [expenses, period]);
 
   const spendingChange = useMemo(() => {
-    if (!previousPeriodTotal) return 0;
+    if (!previousPeriodTotal) {
+      return 0;
+    }
 
     return (
       ((totalSpent - previousPeriodTotal) / previousPeriodTotal) *
@@ -216,12 +215,8 @@ const Analytics = () => {
       if (previousPeriodTotal) {
         answer =
           Number(spendingChange) > 0
-            ? `Your spending is ${Math.abs(
-                spendingChange,
-              )}% higher than the previous period.`
-            : `Your spending is ${Math.abs(
-                spendingChange,
-              )}% lower than the previous period.`;
+            ? `Your spending is ${Math.abs(spendingChange)}% higher than the previous period.`
+            : `Your spending is ${Math.abs(spendingChange)}% lower than the previous period.`;
       } else {
         answer = "There isn't enough previous-period data to compare yet.";
       }
@@ -259,55 +254,25 @@ const Analytics = () => {
           </div>
         </div>
 
-        <div className="analytics-hero-visual">
-          <div className="analytics-mini-chart">
-            <div className="analytics-mini-header">
-              <div>
-                <span>SPENDING TREND</span>
+        <div className="analytics-hero-summary">
+          <div className="analytics-summary-top">
+            <span>PERIOD SPENDING</span>
+            <Wallet size={18} />
+          </div>
 
-                <strong>
-                  {spendingChange > 0 ? "+" : ""}
-                  {spendingChange}%
-                </strong>
-              </div>
+          <strong>₹{totalSpent.toLocaleString()}</strong>
 
-              {Number(spendingChange) >= 0 ? (
-                <TrendingUp size={18} />
-              ) : (
-                <ArrowDownRight size={18} />
-              )}
+          <p>{periodLabel} total spending</p>
+
+          <div className="analytics-summary-stats">
+            <div>
+              <span>Average</span>
+              <strong>₹{Math.round(averageExpense).toLocaleString()}</strong>
             </div>
 
-            <ResponsiveContainer width="100%" height={150}>
-              <AreaChart data={spendingData}>
-                <defs>
-                  <linearGradient
-                    id="analyticsGradient"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="0%" stopColor="#10b981" stopOpacity={0.35} />
-
-                    <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-
-                <Area
-                  type="monotone"
-                  dataKey="amount"
-                  stroke="#10b981"
-                  strokeWidth={2.5}
-                  fill="url(#analyticsGradient)"
-                  dot={false}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-
-            <div className="analytics-mini-footer">
-              <span>{periodLabel} overview</span>
-              <ArrowUpRight size={15} />
+            <div>
+              <span>Categories</span>
+              <strong>{uniqueCategories}</strong>
             </div>
           </div>
         </div>
@@ -375,77 +340,97 @@ const Analytics = () => {
 
                   <div>
                     <h2>Spending Overview</h2>
-
                     <p>Your spending activity over the selected period</p>
                   </div>
                 </div>
-
-                <button className="analytics-dropdown">
-                  {periodLabel}
-                  <ChevronDown size={15} />
-                </button>
               </div>
 
               <div className="analytics-chart">
-                <ResponsiveContainer width="100%" height={330}>
-                  <AreaChart data={spendingData}>
-                    <defs>
-                      <linearGradient
-                        id="mainAnalyticsGradient"
-                        x1="0"
-                        y1="0"
-                        x2="0"
-                        y2="1"
-                      >
-                        <stop
-                          offset="0%"
-                          stopColor="#10b981"
-                          stopOpacity={0.28}
-                        />
+                {spendingData.length >= 2 ? (
+                  <ResponsiveContainer width="100%" height={330}>
+                    <AreaChart data={spendingData}>
+                      <defs>
+                        <linearGradient
+                          id="mainAnalyticsGradient"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="0%"
+                            stopColor="#10b981"
+                            stopOpacity={0.28}
+                          />
 
-                        <stop
-                          offset="100%"
-                          stopColor="#10b981"
-                          stopOpacity={0}
-                        />
-                      </linearGradient>
-                    </defs>
+                          <stop
+                            offset="100%"
+                            stopColor="#10b981"
+                            stopOpacity={0}
+                          />
+                        </linearGradient>
+                      </defs>
 
-                    <CartesianGrid
-                      strokeDasharray="3 3"
-                      stroke="rgba(148,163,184,0.12)"
-                      vertical={false}
-                    />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        stroke="rgba(148,163,184,0.12)"
+                        vertical={false}
+                      />
 
-                    <XAxis
-                      dataKey="day"
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: "#94a3b8", fontSize: 11 }}
-                    />
+                      <XAxis
+                        dataKey="day"
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{
+                          fill: "#94a3b8",
+                          fontSize: 11,
+                        }}
+                      />
 
-                    <YAxis
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: "#94a3b8", fontSize: 11 }}
-                    />
+                      <YAxis
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{
+                          fill: "#94a3b8",
+                          fontSize: 11,
+                        }}
+                      />
 
-                    <Tooltip
-                      formatter={(value) => [
-                        `₹${Number(value).toLocaleString()}`,
-                        "Spent",
-                      ]}
-                    />
+                      <Tooltip
+                        formatter={(value) => [
+                          `₹${Number(value).toLocaleString()}`,
+                          "Spent",
+                        ]}
+                      />
 
-                    <Area
-                      type="monotone"
-                      dataKey="amount"
-                      stroke="#10b981"
-                      strokeWidth={3}
-                      fill="url(#mainAnalyticsGradient)"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
+                      <Area
+                        type="monotone"
+                        dataKey="amount"
+                        stroke="#10b981"
+                        strokeWidth={3}
+                        fill="url(#mainAnalyticsGradient)"
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="analytics-chart-empty">
+                    <div className="analytics-chart-empty-icon">
+                      <TrendingUp size={24} />
+                    </div>
+
+                    <h3>
+                      {spendingData.length === 0
+                        ? "No spending data yet"
+                        : "Not enough data for a trend yet"}
+                    </h3>
+
+                    <p>
+                      {spendingData.length === 0
+                        ? "Add your first expense to start building your analytics."
+                        : "Add expenses on different days to see your spending pattern here."}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -458,62 +443,75 @@ const Analytics = () => {
 
                   <div>
                     <h2>Spending Distribution</h2>
-
                     <p>Where your money goes</p>
                   </div>
                 </div>
               </div>
 
-              <div className="analytics-donut">
-                <ResponsiveContainer width="100%" height={250}>
-                  <PieChart>
-                    <Pie
-                      data={distributionData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={65}
-                      outerRadius={95}
-                      paddingAngle={3}
-                      dataKey="value"
-                    >
-                      {distributionData.map((entry, index) => (
-                        <Cell
-                          key={entry.name}
-                          fill={COLORS[index % COLORS.length]}
+              {distributionData.length > 0 ? (
+                <>
+                  <div className="analytics-donut">
+                    <ResponsiveContainer width="100%" height={250}>
+                      <PieChart>
+                        <Pie
+                          data={distributionData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={65}
+                          outerRadius={95}
+                          paddingAngle={3}
+                          dataKey="value"
+                        >
+                          {distributionData.map((entry, index) => (
+                            <Cell
+                              key={entry.name}
+                              fill={COLORS[index % COLORS.length]}
+                            />
+                          ))}
+                        </Pie>
+
+                        <Tooltip
+                          formatter={(value) =>
+                            `₹${Number(value).toLocaleString()}`
+                          }
                         />
-                      ))}
-                    </Pie>
+                      </PieChart>
+                    </ResponsiveContainer>
 
-                    <Tooltip
-                      formatter={(value) =>
-                        `₹${Number(value).toLocaleString()}`
-                      }
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
+                    <div className="analytics-donut-center">
+                      <span>Total</span>
 
-                <div className="analytics-donut-center">
-                  <span>Total</span>
-
-                  <strong>₹{totalSpent.toLocaleString()}</strong>
-                </div>
-              </div>
-
-              <div className="analytics-legend">
-                {categoryData.map((item, index) => (
-                  <div key={item.name}>
-                    <span
-                      style={{
-                        backgroundColor: COLORS[index % COLORS.length],
-                      }}
-                    ></span>
-
-                    <p>{item.name}</p>
-
-                    <strong>₹{item.amount.toLocaleString()}</strong>
+                      <strong>₹{totalSpent.toLocaleString()}</strong>
+                    </div>
                   </div>
-                ))}
-              </div>
+
+                  <div className="analytics-legend">
+                    {categoryData.map((item, index) => (
+                      <div key={item.name}>
+                        <span
+                          style={{
+                            backgroundColor: COLORS[index % COLORS.length],
+                          }}
+                        ></span>
+
+                        <p>{item.name}</p>
+
+                        <strong>₹{item.amount.toLocaleString()}</strong>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="analytics-chart-empty analytics-donut-empty">
+                  <div className="analytics-chart-empty-icon">
+                    <Wallet size={24} />
+                  </div>
+
+                  <h3>No categories yet</h3>
+
+                  <p>Add expenses to see where your money is going.</p>
+                </div>
+              )}
             </div>
           </section>
 
@@ -527,52 +525,71 @@ const Analytics = () => {
 
                   <div>
                     <h2>Category Spending</h2>
-
                     <p>Compare your spending categories</p>
                   </div>
                 </div>
               </div>
 
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart
-                  data={categoryData}
-                  layout="vertical"
-                  margin={{ left: 10, right: 15 }}
-                >
-                  <CartesianGrid
-                    strokeDasharray="3 3"
-                    stroke="rgba(148,163,184,0.1)"
-                    horizontal={false}
-                  />
+              {categoryData.length > 0 ? (
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart
+                    data={categoryData}
+                    layout="vertical"
+                    margin={{ left: 10, right: 15 }}
+                  >
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="rgba(148,163,184,0.1)"
+                      horizontal={false}
+                    />
 
-                  <XAxis
-                    type="number"
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fill: "#94a3b8", fontSize: 11 }}
-                  />
+                    <XAxis
+                      type="number"
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{
+                        fill: "#94a3b8",
+                        fontSize: 11,
+                      }}
+                    />
 
-                  <YAxis
-                    type="category"
-                    dataKey="name"
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fill: "#94a3b8", fontSize: 11 }}
-                    width={65}
-                  />
+                    <YAxis
+                      type="category"
+                      dataKey="name"
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{
+                        fill: "#94a3b8",
+                        fontSize: 11,
+                      }}
+                      width={65}
+                    />
 
-                  <Tooltip
-                    formatter={(value) => `₹${Number(value).toLocaleString()}`}
-                  />
+                    <Tooltip
+                      formatter={(value) =>
+                        `₹${Number(value).toLocaleString()}`
+                      }
+                    />
 
-                  <Bar
-                    dataKey="amount"
-                    fill="#10b981"
-                    radius={[0, 7, 7, 0]}
-                    barSize={18}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+                    <Bar
+                      dataKey="amount"
+                      fill="#10b981"
+                      radius={[0, 7, 7, 0]}
+                      barSize={18}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="analytics-chart-empty">
+                  <div className="analytics-chart-empty-icon">
+                    <Wallet size={24} />
+                  </div>
+
+                  <h3>No category data yet</h3>
+
+                  <p>Add some expenses to compare your spending categories.</p>
+                </div>
+              )}
             </div>
 
             <div className="analytics-insights-card">
@@ -584,7 +601,6 @@ const Analytics = () => {
 
                   <div>
                     <h2>Smart Insights</h2>
-
                     <p>What your spending tells you</p>
                   </div>
                 </div>
@@ -618,9 +634,11 @@ const Analytics = () => {
 
                   <div>
                     <h3>
-                      {spendingChange > 0
-                        ? "Spending increased"
-                        : "Spending decreased"}
+                      {previousPeriodTotal
+                        ? spendingChange > 0
+                          ? "Spending increased"
+                          : "Spending decreased"
+                        : "Spending comparison"}
                     </h3>
 
                     <p>
@@ -663,7 +681,6 @@ const Analytics = () => {
 
               <div>
                 <span>AI FINANCIAL ASSISTANT</span>
-
                 <h2>Your personal spending analyst</h2>
               </div>
 

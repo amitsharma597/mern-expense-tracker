@@ -287,6 +287,13 @@ const Analytics = () => {
 
         <div className="analytics-periods">
           <button
+            className={period === "all" ? "active" : ""}
+            onClick={() => setPeriod("all")}
+          >
+            ALL
+          </button>
+
+          <button
             className={period === "7" ? "active" : ""}
             onClick={() => setPeriod("7")}
           >

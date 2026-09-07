@@ -1,25 +1,26 @@
-const OpenAI = require("openai");
+const { GoogleGenAI } = require("@google/genai");
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 const chatController = async (req, res) => {
   try {
     const { message } = req.body;
 
-    const response = await client.responses.create({
-      model: "gpt-5",
-      input: message,
+    const response = await ai.models.generateContent({
+      model: "gemini-3.6-flash",
+      contents: message,
     });
 
     res.json({
-      reply: response.output_text,
+      reply: response.text,
     });
   } catch (error) {
     console.log(error);
+
     res.status(500).json({
-      message: "Something went wrong with AI",
+      message: error.message,
     });
   }
 };

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import {
   Area,
   AreaChart,
@@ -35,6 +36,7 @@ const Analytics = () => {
 
   const [aiQuestion, setAiQuestion] = useState("");
   const [aiAnswer, setAiAnswer] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -187,42 +189,69 @@ const Analytics = () => {
     all: "all time",
   }[period];
 
-  const handleAiQuestion = (question = aiQuestion) => {
-    const lowerQuestion = question.toLowerCase();
-
-    let answer =
-      "Based on your current expenses, your spending looks fairly distributed.";
-
-    if (lowerQuestion.includes("most") || lowerQuestion.includes("biggest")) {
-      if (biggestCategory) {
-        answer = `Your biggest spending category is ${biggestCategory.name}, with ₹${biggestCategory.amount.toLocaleString()} spent.`;
-      } else {
-        answer = "You don't have enough expense data yet.";
-      }
-    } else if (
-      lowerQuestion.includes("save") ||
-      lowerQuestion.includes("saving")
-    ) {
-      if (biggestCategory) {
-        answer = `A good place to start saving would be ${biggestCategory.name}, since it represents about ${biggestCategoryPercentage}% of your spending.`;
-      } else {
-        answer = "Add some expenses first and I'll analyze where you can save.";
-      }
-    } else if (
-      lowerQuestion.includes("compare") ||
-      lowerQuestion.includes("month")
-    ) {
-      if (previousPeriodTotal) {
-        answer =
-          Number(spendingChange) > 0
-            ? `Your spending is ${Math.abs(spendingChange)}% higher than the previous period.`
-            : `Your spending is ${Math.abs(spendingChange)}% lower than the previous period.`;
-      } else {
-        answer = "There isn't enough previous-period data to compare yet.";
-      }
+  const handleAiQuestion = async (question = aiQuestion) => {
+    if (!question.trim()) {
+      return;
     }
 
-    setAiAnswer(answer);
+    try {
+      setAiLoading(true);
+      setAiAnswer("");
+
+      const expenseData = filteredExpenses.map((expense) => ({
+        title: expense.title,
+        amount: Number(expense.amount || 0),
+        category: expense.category || "Other",
+        date: expense.date,
+        description: expense.description || "",
+      }));
+
+      const response = await fetch("http://localhost:5000/api/ai/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: `
+You are a personal financial assistant for an expense tracker.
+
+The user is asking:
+"${question}"
+
+The selected analytics period is:
+${periodLabel}
+
+Here is the user's expense data for this period:
+
+${JSON.stringify(expenseData, null, 2)}
+
+Analyze the expense data and answer the user's question using the actual data.
+
+Rules:
+- Give a clear, practical and concise answer.
+- Use ₹ for monetary amounts.
+- Do not invent expenses or numbers.
+- Only use information available in the provided expense data.
+- If there is not enough data to answer the question, clearly say so.
+- Give useful financial advice when appropriate.
+            `,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to get AI response");
+      }
+
+      const data = await response.json();
+
+      setAiAnswer(data.reply);
+      setAiQuestion("");
+    } catch (error) {
+      console.error(error);
+      setAiAnswer("Sorry, I couldn't get a response right now.");
+    } finally {
+      setAiLoading(false);
+    }
   };
 
   return (
@@ -702,11 +731,21 @@ const Analytics = () => {
 
                 <div>
                   <strong>AI Assistant</strong>
-
-                  <p>
-                    {aiAnswer ||
-                      `I've analyzed your ${periodLabel} spending. Ask me anything about your expenses, trends, or ways you could save money.`}
-                  </p>
+                  <div className="analytics-ai-message">
+                    {aiLoading ? (
+                      <p>Analyzing your expenses...</p>
+                    ) : aiAnswer ? (
+                      <div className="analytics-ai-response">
+                        <ReactMarkdown>{aiAnswer}</ReactMarkdown>
+                      </div>
+                    ) : (
+                      <p>
+                        I've analyzed your {periodLabel} spending. Ask me
+                        anything about your expenses, trends, or ways you could
+                        save money.
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -723,31 +762,38 @@ const Analytics = () => {
                     }
                   }}
                   placeholder='Ask something like "Where am I overspending?"'
+                  disabled={aiLoading}
                 />
 
                 <button
                   onClick={() => handleAiQuestion()}
-                  disabled={!aiQuestion.trim()}
+                  disabled={!aiQuestion.trim() || aiLoading}
                 >
-                  Ask AI
-                  <Sparkles size={15} />
+                  {aiLoading ? "Thinking..." : "Ask AI"}
+
+                  {!aiLoading && <Sparkles size={15} />}
                 </button>
               </div>
 
               <div className="analytics-ai-suggestions">
                 <button
                   onClick={() => handleAiQuestion("Where do I spend the most?")}
+                  disabled={aiLoading}
                 >
                   Where do I spend the most?
                 </button>
 
                 <button
                   onClick={() => handleAiQuestion("How can I save money?")}
+                  disabled={aiLoading}
                 >
                   How can I save money?
                 </button>
 
-                <button onClick={() => handleAiQuestion("Compare this month")}>
+                <button
+                  onClick={() => handleAiQuestion("Compare this month")}
+                  disabled={aiLoading}
+                >
                   Compare this month
                 </button>
               </div>

@@ -2464,6 +2464,62 @@ body {
   background: var(--primary-light);
 }
 
+.analytics-ai-message h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: var(--text-main);
+}
+
+.analytics-ai-message strong {
+  color: var(--text-main);
+}
+
+.analytics-ai-message ul,
+.analytics-ai-message ol {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.analytics-ai-message li {
+  margin-bottom: 5px;
+}
+
+.analytics-ai-response {
+  flex: 1;
+  min-width: 0;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.analytics-ai-response p {
+  margin: 0 0 14px;
+}
+
+.analytics-ai-response h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: var(--text-main);
+}
+
+.analytics-ai-response ul,
+.analytics-ai-response ol {
+  margin: 8px 0 14px;
+  padding-left: 22px;
+}
+
+.analytics-ai-response li {
+  margin-bottom: 8px;
+}
+
+.analytics-ai-response strong {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.analytics-ai-response em {
+  color: var(--text-muted);
+}
+
 @media (max-width: 1024px) {
   .analytics-hero {
     grid-template-columns: 1fr;

@@ -189,7 +189,7 @@ const Analytics = () => {
     all: "all time",
   }[period];
 
-  const handleAiQuestion = async (question = aiQuestion) => {
+  const handleAiQuestion = async (question) => {
     if (!question.trim()) {
       return;
     }
@@ -731,7 +731,7 @@ Rules:
 
                 <div>
                   <strong>AI Assistant</strong>
-                  <div className="analytics-ai-message">
+                  <div className="analytics-ai-response">
                     {aiLoading ? (
                       <p>Analyzing your expenses...</p>
                     ) : aiAnswer ? (
@@ -758,7 +758,7 @@ Rules:
                   onChange={(event) => setAiQuestion(event.target.value)}
                   onKeyDown={(event) => {
                     if (event.key === "Enter") {
-                      handleAiQuestion();
+                      handleAiQuestion(aiQuestion);
                     }
                   }}
                   placeholder='Ask something like "Where am I overspending?"'
@@ -766,7 +766,7 @@ Rules:
                 />
 
                 <button
-                  onClick={() => handleAiQuestion()}
+                  onClick={() => handleAiQuestion(aiQuestion)}
                   disabled={!aiQuestion.trim() || aiLoading}
                 >
                   {aiLoading ? "Thinking..." : "Ask AI"}

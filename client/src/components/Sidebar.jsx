@@ -1,4 +1,4 @@
-import { LayoutDashboard, Wallet, ChartColumn, Settings } from "lucide-react";
+import { LayoutDashboard, Wallet, ChartColumn } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
@@ -23,7 +23,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             onClick={closeSidebar}
           >
             <LayoutDashboard size={20} />
-            <span>Dashboard</span>
+            <span>Home</span>
           </NavLink>
 
           <NavLink
@@ -46,17 +46,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           >
             <ChartColumn size={20} />
             <span>Analytics</span>
-          </NavLink>
-
-          <NavLink
-            to="/settings"
-            className={({ isActive }) =>
-              `sidebar-link ${isActive ? "active" : ""}`
-            }
-            onClick={closeSidebar}
-          >
-            <Settings size={20} />
-            <span>Settings</span>
           </NavLink>
         </nav>
       </aside>

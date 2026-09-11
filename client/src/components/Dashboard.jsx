@@ -307,7 +307,6 @@ const Dashboard = ({ sidebarOpen }) => {
             <div className="dashboard-section-header">
               <div>
                 <span className="dashboard-section-label">RECENT ACTIVITY</span>
-
                 <h2>What's happening</h2>
               </div>
 
@@ -348,90 +347,29 @@ const Dashboard = ({ sidebarOpen }) => {
             ) : (
               <div className="dashboard-empty compact">
                 <ReceiptText size={23} />
-
                 <h3>Nothing here yet</h3>
-
                 <p>Your latest transactions will show up here.</p>
               </div>
             )}
           </div>
 
-          <div className="quick-actions-card">
-            <div className="dashboard-section-header">
+          <section className="dashboard-add-expense" id="expense-form-section">
+            <div className="dashboard-add-expense-header">
               <div>
-                <span className="dashboard-section-label">SHORTCUTS</span>
-                <h2>Jump right in</h2>
+                <span className="dashboard-section-label">KEEP IT UPDATED</span>
+
+                <h2>Just spent something?</h2>
+
+                <p>Add it now. Your dashboard will take care of the rest.</p>
+              </div>
+
+              <div className="dashboard-add-expense-icon">
+                <IndianRupee size={22} />
               </div>
             </div>
 
-            <div className="quick-actions">
-              <button
-                className="quick-action quick-action-primary"
-                onClick={scrollToExpenseForm}
-              >
-                <div className="quick-action-icon">
-                  <Plus size={19} />
-                </div>
-
-                <span>
-                  <strong>Add an expense</strong>
-                  <small>Record something you just spent</small>
-                </span>
-
-                <ArrowRight size={17} />
-              </button>
-
-              <button
-                className="quick-action"
-                onClick={() => navigate("/expenses")}
-              >
-                <div className="quick-action-icon">
-                  <ReceiptText size={19} />
-                </div>
-
-                <span>
-                  <strong>Manage expenses</strong>
-                  <small>Review and organize everything</small>
-                </span>
-
-                <ArrowRight size={17} />
-              </button>
-
-              <button
-                className="quick-action"
-                onClick={() => navigate("/analytics")}
-              >
-                <div className="quick-action-icon">
-                  <BarChart3 size={19} />
-                </div>
-
-                <span>
-                  <strong>Explore analytics</strong>
-                  <small>Find patterns in your spending</small>
-                </span>
-
-                <ArrowRight size={17} />
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section className="dashboard-add-expense" id="expense-form-section">
-          <div className="dashboard-add-expense-header">
-            <div>
-              <span className="dashboard-section-label">KEEP IT UPDATED</span>
-
-              <h2>Just spent something?</h2>
-
-              <p>Add it now. Your dashboard will take care of the rest.</p>
-            </div>
-
-            <div className="dashboard-add-expense-icon">
-              <IndianRupee size={22} />
-            </div>
-          </div>
-
-          <ExpenseForm fetchExpenses={fetchExpenses} />
+            <ExpenseForm fetchExpenses={fetchExpenses} />
+          </section>
         </section>
       </main>
     </div>

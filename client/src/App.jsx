@@ -2,9 +2,8 @@ import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-import Dashboard from "./components/Dashboard";
+import Home from "./pages/Home";
 import Analytics from "./pages/Analytics";
-import Settings from "./pages/Settings";
 import Expenses from "./pages/Expenses";
 import "./App.css";
 
@@ -18,13 +17,9 @@ const App = () => {
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       <Routes>
-        <Route path="/" element={<Dashboard sidebarOpen={sidebarOpen} />} />
-        <Route
-          path="/expenses"
-          element={<Expenses sidebarOpen={sidebarOpen} />}
-        />
+        <Route path="/" element={<Home sidebarOpen={sidebarOpen} />} />
+        <Route path="/expenses" element={<Expenses />} />
         <Route path="/analytics" element={<Analytics />} />
-        <Route path="/settings" element={<Settings />} />
       </Routes>
     </>
   );

@@ -303,6 +303,23 @@ const Dashboard = ({ sidebarOpen }) => {
         </section>
 
         <section className="dashboard-bottom-grid">
+          <section className="dashboard-add-expense" id="expense-form-section">
+            <div className="dashboard-add-expense-header">
+              <div>
+                <span className="dashboard-section-label">KEEP IT UPDATED</span>
+
+                <h2>Just spent something?</h2>
+
+                <p>Add it now. Your dashboard will take care of the rest.</p>
+              </div>
+
+              <div className="dashboard-add-expense-icon">
+                <IndianRupee size={22} />
+              </div>
+            </div>
+
+            <ExpenseForm fetchExpenses={fetchExpenses} />
+          </section>
           <div className="recent-expenses-card">
             <div className="dashboard-section-header">
               <div>
@@ -352,24 +369,6 @@ const Dashboard = ({ sidebarOpen }) => {
               </div>
             )}
           </div>
-
-          <section className="dashboard-add-expense" id="expense-form-section">
-            <div className="dashboard-add-expense-header">
-              <div>
-                <span className="dashboard-section-label">KEEP IT UPDATED</span>
-
-                <h2>Just spent something?</h2>
-
-                <p>Add it now. Your dashboard will take care of the rest.</p>
-              </div>
-
-              <div className="dashboard-add-expense-icon">
-                <IndianRupee size={22} />
-              </div>
-            </div>
-
-            <ExpenseForm fetchExpenses={fetchExpenses} />
-          </section>
         </section>
       </main>
     </div>

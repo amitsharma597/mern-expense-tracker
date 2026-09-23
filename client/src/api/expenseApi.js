@@ -1,50 +1,72 @@
-const BASE_URL = "http://localhost:5000/api/expenses";
+const API_URL = "http://localhost:5000/api/expenses";
 
-const getExpenses = async () => {
-  const response = await fetch(BASE_URL);
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("token");
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch expenses");
-  }
-
-  return response.json();
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
 };
 
-const createExpenses = async (expense) => {
-  const response = await fetch(BASE_URL, {
+export const getExpenses = async () => {
+  const response = await fetch(API_URL, {
+    method: "GET",
+    headers: getAuthHeaders(),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to fetch expenses");
+  }
+
+  return data;
+};
+
+export const createExpenses = async (expense) => {
+  const response = await fetch(API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: getAuthHeaders(),
     body: JSON.stringify(expense),
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error("Failed to create expenses");
+    throw new Error(data.message || "Failed to create expense");
   }
+
+  return data;
 };
 
-const deleteExpense = async (id) => {
-  const response = await fetch(`${BASE_URL}/${id}`, {
-    method: "DELETE",
-  });
-  if (!response.ok) {
-    throw new Error("Failed to create expenses");
-  }
-};
-
-const updateExpense = async (id, expense) => {
-  const response = await fetch(`${BASE_URL}/${id}`, {
+export const updateExpense = async (id, expense) => {
+  const response = await fetch(`${API_URL}/${id}`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: getAuthHeaders(),
     body: JSON.stringify(expense),
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error("Failed to update expense");
+    throw new Error(data.message || "Failed to update expense");
   }
+
+  return data;
 };
 
-export { getExpenses, createExpenses, deleteExpense, updateExpense };
+export const deleteExpense = async (id) => {
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "DELETE",
+    headers: getAuthHeaders(),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to delete expense");
+  }
+
+  return data;
+};

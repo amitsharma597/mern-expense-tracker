@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { getExpenses } from "../api/expenseApi";
 import {
   Area,
   AreaChart,
@@ -44,13 +45,7 @@ const Analytics = () => {
         setLoading(true);
         setError("");
 
-        const response = await fetch("http://localhost:5000/api/expenses");
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch expenses");
-        }
-
-        const data = await response.json();
+        const data = await getExpenses();
 
         setExpenses(data);
       } catch (error) {

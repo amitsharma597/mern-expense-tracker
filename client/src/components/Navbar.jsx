@@ -1,47 +1,66 @@
-import { Wallet, Moon, Sun, List } from "lucide-react";
+import { Menu, Wallet, LogOut, Sun, Moon } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
-const Navbar = ({ setSidebarOpen }) => {
-  const [isDark, setIsDark] = useState(() => {
+const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
+  const { user, logout } = useAuth();
+
+  const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
   });
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDark);
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  }, [isDark]);
+    document.documentElement.classList.toggle("dark", darkMode);
+
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
+
+  const toggleTheme = () => {
+    setDarkMode((prev) => !prev);
+  };
 
   return (
     <header className="navbar">
       <div className="navbar-left">
         <button
           className="menu-btn"
-          onClick={() => setSidebarOpen((prev) => !prev)}
+          onClick={() => setSidebarOpen(!sidebarOpen)}
           aria-label="Toggle sidebar"
         >
-          <List size={22} />
+          <Menu size={22} />
         </button>
 
-        <div className="logo-icon">
-          <Wallet size={22} strokeWidth={2.3} />
-        </div>
+        <Link to="/" className="navbar-brand">
+          <div className="navbar-logo">
+            <Wallet size={20} />
+          </div>
 
-        <div>
-          <h2>Expense Tracker</h2>
-          <p>Manage your finances smarter</p>
-        </div>
+          <span>ExpenseTracker</span>
+        </Link>
       </div>
 
       <div className="navbar-right">
+        {user?.name && <span className="navbar-user">Hi, {user.name}</span>}
+
         <button
-          className="theme-btn"
-          onClick={() => setIsDark((prev) => !prev)}
+          type="button"
+          className="theme-toggle"
+          onClick={toggleTheme}
           aria-label="Toggle theme"
         >
-          {isDark ? <Sun size={19} /> : <Moon size={19} />}
+          {darkMode ? <Sun size={18} /> : <Moon size={18} />}
         </button>
 
-        <div className="avatar">A</div>
+        <button
+          type="button"
+          className="logout-btn"
+          onClick={logout}
+          aria-label="Logout"
+        >
+          <LogOut size={17} />
+          <span>Logout</span>
+        </button>
       </div>
     </header>
   );

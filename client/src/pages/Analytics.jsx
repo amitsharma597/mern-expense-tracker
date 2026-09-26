@@ -201,13 +201,15 @@ const Analytics = () => {
         description: expense.description || "",
       }));
 
-      const response = await fetch("http://localhost:5000/api/ai/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: `
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/ai/chat`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: `
 You are a personal financial assistant for an expense tracker.
 
 The user is asking:
@@ -230,8 +232,9 @@ Rules:
 - If there is not enough data to answer the question, clearly say so.
 - Give useful financial advice when appropriate.
             `,
-        }),
-      });
+          }),
+        },
+      );
 
       if (!response.ok) {
         throw new Error("Failed to get AI response");

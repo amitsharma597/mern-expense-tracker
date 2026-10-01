@@ -2313,6 +2313,9 @@ button {
   background: rgba(244, 63, 94, 0.1);
   color: #f43f5e;
 }
+.analytics-insight h3 {
+  font-size: 15px;
+}
 
 /* ==================== GEMINI AI ==================== */
 
@@ -2508,6 +2511,9 @@ button {
   color: var(--primary);
   border-color: var(--primary);
   background: var(--primary-light);
+}
+.analytics-chart-card {
+  width: 650px;
 }
 
 /* ==================== ANIMATIONS ==================== */

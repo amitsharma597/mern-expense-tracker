@@ -2633,6 +2633,7 @@ button {
 }
 
 /* ==================== RESPONSIVE ==================== */
+/* ==================== RESPONSIVE ==================== */
 
 @media (max-width: 1024px) {
   .sidebar-active .main-content {
@@ -2643,21 +2644,18 @@ button {
   }
   .dashboard-hero {
     grid-template-columns: 1fr;
+    gap: 2rem;
     padding: 2rem 0;
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
   }
   .dashboard-hero-content {
     max-width: 760px;
   }
   .dashboard-visual {
-    min-height: 390px;
-    margin-top: 1rem;
+    min-height: 380px;
   }
   .summary-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-  .spending-focus-list {
-    grid-template-columns: 1fr 1fr;
   }
   .dashboard-bottom-grid {
     grid-template-columns: 1fr;
@@ -2667,21 +2665,27 @@ button {
   }
   .analytics-hero {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
   .analytics-main-grid {
     grid-template-columns: 1fr;
   }
   .analytics-bottom-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+  }
+  .analytics-chart-card {
+    width: 100%;
   }
 }
 
 @media (max-width: 768px) {
   .navbar {
+    height: 68px;
     padding: 0 1rem;
   }
-  .navbar-left {
-    gap: 0.65rem;
+  .navbar-left,
+  .navbar-right {
+    gap: 0.7rem;
   }
   .navbar-user {
     display: none;
@@ -2703,64 +2707,67 @@ button {
   .sidebar-active .main-content {
     margin-left: 0;
   }
+
   .dashboard-hero {
+    gap: 1.5rem;
     padding: 1rem 0 0;
-    margin-bottom: 3rem;
-    gap: 1rem;
+    margin-bottom: 2.5rem;
   }
   .dashboard-hero h1 {
-    font-size: 2.55rem;
-    letter-spacing: -1.7px;
+    font-size: 2.5rem;
+    letter-spacing: -1.6px;
   }
   .dashboard-hero-content > p {
+    max-width: 600px;
     font-size: 0.86rem;
     line-height: 1.65;
+  }
+  .dashboard-hero-actions {
+    gap: 0.65rem;
   }
   .dashboard-visual {
     min-height: 350px;
   }
   .dashboard-visual-card {
-    width: min(390px, 78%);
+    width: min(390px, 80%);
     padding: 23px;
   }
   .dashboard-orbit.orbit-two {
     width: 400px;
     height: 400px;
   }
-  .floating-stat-one {
-    left: 0;
-  }
-  .floating-stat-two {
-    right: 0;
-  }
+
   .dashboard-section {
-    margin-bottom: 3rem;
+    margin-bottom: 2.75rem;
   }
   .dashboard-section-header {
     align-items: flex-start;
+    gap: 1rem;
   }
   .dashboard-section-header h2 {
     font-size: 1.3rem;
   }
+
   .summary-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 0.85rem;
   }
   .summary-card {
-    padding: 1.1rem;
-    gap: 0.9rem;
+    padding: 1rem;
+    gap: 0.75rem;
   }
   .card-icon {
     width: 42px;
     height: 42px;
-    border-radius: 12px;
   }
   .card-content h2,
   .card-content h3 {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
+
   .spending-focus-list {
     grid-template-columns: 1fr;
+    gap: 1.2rem;
   }
   .recent-expenses-card {
     padding: 1.2rem;
@@ -2768,50 +2775,23 @@ button {
   .dashboard-add-expense {
     padding: 1.25rem;
   }
-  .dashboard-add-expense-header {
-    align-items: flex-start;
-  }
-  .dashboard-add-expense-header h2 {
-    font-size: 1.15rem;
-  }
-  .form-header {
-    margin-bottom: 0.9rem;
-    padding-bottom: 0.8rem;
-  }
-  .form-icon {
-    width: 38px;
-    height: 38px;
-  }
-  .form-header h2 {
-    font-size: 1rem;
-  }
-  .form-header p {
-    font-size: 0.64rem;
-  }
-  .expense-form-grid {
-    gap: 0.65rem;
-  }
-  .input-box input,
-  .input-box select {
-    height: 37px;
-    font-size: 0.72rem;
-  }
-  .add-btn {
-    height: 38px;
-  }
+
   .expense-form-grid {
     grid-template-columns: 1fr;
+    gap: 0.7rem;
   }
   .form-group.full-width,
   .add-btn {
-    grid-column: span 1;
+    grid-column: 1;
   }
+
   .expenses-page {
-    padding: 1.25rem 1rem;
+    padding: 1.5rem 1rem;
   }
   .expenses-page-header {
     align-items: flex-start;
     flex-direction: column;
+    gap: 1rem;
   }
   .expenses-page-header h1 {
     font-size: 2rem;
@@ -2828,7 +2808,7 @@ button {
   }
   .expenses-field-full,
   .expenses-form-actions {
-    grid-column: span 1;
+    grid-column: 1;
   }
   .expenses-form-actions {
     flex-direction: column-reverse;
@@ -2838,10 +2818,11 @@ button {
     width: 100%;
   }
   .expenses-card-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
+
   .analytics-page {
-    padding: 1.25rem 1rem;
+    padding: 1.5rem 1rem;
   }
   .analytics-hero {
     padding: 2rem 1.5rem;
@@ -2853,10 +2834,10 @@ button {
   .analytics-toolbar {
     flex-direction: column;
     align-items: flex-start;
+    gap: 1rem;
   }
   .analytics-periods {
     width: 100%;
-    overflow-x: auto;
   }
   .analytics-periods button {
     flex: 1;
@@ -2864,45 +2845,55 @@ button {
   }
   .analytics-chart-card,
   .analytics-insights-card {
+    width: 100%;
     padding: 1.2rem;
   }
   .analytics-ai-card {
     padding: 1.2rem;
   }
+
+  .auth-page {
+    padding: 1.5rem 1rem;
+  }
 }
 
-@media (max-width: 480px) {
-  .menu-btn {
-    width: 38px;
-    height: 38px;
+@media (max-width: 600px) {
+  .navbar {
+    padding: 0 0.85rem;
+  }
+  .navbar-brand span {
+    display: none;
   }
   .navbar-logo {
     width: 36px;
     height: 36px;
   }
-  .navbar-brand {
-    font-size: 0.95rem;
+  .menu-btn,
+  .theme-toggle {
+    width: 38px;
+    height: 38px;
   }
-  .navbar-brand span {
-    display: none;
-  }
+
   .main-content {
-    padding: 1rem 1rem 2.5rem;
+    padding: 1.25rem 0.85rem 2.5rem;
   }
+
   .dashboard-hero {
     padding: 0.5rem 0 0;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
   }
   .dashboard-eyebrow {
+    margin-bottom: 0.8rem;
     font-size: 0.58rem;
     letter-spacing: 1.3px;
   }
   .dashboard-hero h1 {
-    font-size: 2.05rem;
+    font-size: 2.15rem;
     letter-spacing: -1.2px;
   }
   .dashboard-hero-content > p {
-    font-size: 0.78rem;
+    margin: 1rem 0 1.25rem;
+    font-size: 0.8rem;
   }
   .dashboard-hero-actions {
     flex-direction: column;
@@ -2912,11 +2903,16 @@ button {
   .dashboard-outline-btn {
     width: 100%;
   }
+  .dashboard-hero-note {
+    margin-top: 1rem;
+  }
+
   .dashboard-visual {
-    min-height: 320px;
+    min-height: 300px;
+    margin-top: 0.5rem;
   }
   .dashboard-visual-card {
-    width: 86%;
+    width: 88%;
     padding: 19px;
     border-radius: 22px;
   }
@@ -2924,88 +2920,106 @@ button {
     font-size: 1.9rem;
   }
   .visual-chart {
-    height: 85px;
-    gap: 8px;
+    height: 80px;
+    gap: 7px;
     margin: 20px 0 17px;
   }
   .dashboard-orbit.orbit-one {
-    width: 290px;
-    height: 290px;
+    width: 270px;
+    height: 270px;
   }
   .dashboard-orbit.orbit-two {
-    width: 340px;
-    height: 340px;
+    width: 320px;
+    height: 320px;
   }
   .floating-stat {
-    min-width: 105px;
-    padding: 9px 10px;
-    font-size: 0.58rem;
+    min-width: 100px;
+    padding: 8px 9px;
   }
   .floating-stat > div {
-    width: 28px;
-    height: 28px;
-  }
-  .floating-stat strong {
-    font-size: 0.7rem;
+    width: 27px;
+    height: 27px;
   }
   .floating-stat-one {
-    top: 8%;
-    left: -2%;
+    left: 0;
+    top: 6%;
   }
   .floating-stat-two {
-    right: -2%;
-    bottom: 10%;
+    right: 0;
+    bottom: 7%;
   }
+
   .dashboard-section-header {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.6rem;
+    gap: 0.5rem;
   }
-  .dashboard-text-link {
-    margin-top: 0.1rem;
+  .dashboard-section-header h2 {
+    font-size: 1.2rem;
   }
+
   .summary-grid {
     grid-template-columns: 1fr;
+    gap: 0.7rem;
   }
   .summary-card {
-    padding: 1.05rem;
+    padding: 0.95rem;
   }
+
   .spending-focus-card {
-    padding: 1.1rem;
+    padding: 1rem;
+  }
+  .spending-focus-intro {
+    padding-bottom: 1rem;
   }
   .spending-focus-list {
-    gap: 1.2rem;
+    padding: 1.1rem 0;
   }
+
   .recent-expenses-card,
   .dashboard-add-expense {
     padding: 1rem;
   }
   .recent-expense-item {
-    padding: 0.65rem 0.35rem;
+    padding: 0.65rem 0.25rem;
   }
   .recent-expense-arrow {
     display: none;
   }
+
   .dashboard-add-expense-header {
-    gap: 0.7rem;
+    align-items: flex-start;
+  }
+  .dashboard-add-expense-header h2 {
+    font-size: 1.1rem;
   }
   .dashboard-add-expense-icon {
     width: 40px;
     height: 40px;
   }
-  .expenses-form-card,
+
+  .expenses-page {
+    padding: 1.25rem 0.85rem;
+  }
+  .expenses-page-header h1 {
+    font-size: 1.8rem;
+  }
   .expenses-list-section {
-    padding: 1.1rem;
+    padding: 1rem;
   }
   .expenses-list-header {
     align-items: flex-start;
     flex-direction: column;
+    gap: 0.6rem;
+  }
+  .expenses-card-grid {
+    grid-template-columns: 1fr;
   }
   .expense-page-card {
-    min-height: 190px;
+    min-height: 180px;
   }
+
   .analytics-page {
-    padding: 1rem;
+    padding: 1.25rem 0.85rem;
   }
   .analytics-hero {
     padding: 1.5rem;
@@ -3013,27 +3027,25 @@ button {
   .analytics-hero h1 {
     font-size: 1.9rem;
   }
+  .analytics-hero-content > p {
+    font-size: 0.82rem;
+  }
   .analytics-hero-meta {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.6rem;
   }
-  .analytics-hero-summary {
-    width: 100%;
-  }
   .analytics-summary-stats {
-    gap: 0.7rem;
+    grid-template-columns: 1fr 1fr;
   }
   .analytics-chart-empty {
-    height: 300px;
-    padding: 1.5rem;
+    height: 280px;
+    padding: 1.25rem;
   }
   .analytics-ai-input {
     flex-wrap: wrap;
-    padding: 0.6rem;
   }
   .analytics-ai-input input {
-    width: 100%;
     flex-basis: calc(100% - 30px);
   }
   .analytics-ai-input button {
@@ -3046,51 +3058,114 @@ button {
   .analytics-ai-suggestions button {
     width: 100%;
   }
-}
-@media (max-width: 768px) {
-  .navbar {
-    height: 68px;
-    padding: 0 1rem;
+
+  .auth-page {
+    padding: 1.25rem 0.85rem;
   }
-  .navbar-left {
-    gap: 0.7rem;
-  }
-  .menu-btn {
-    width: 40px;
-    height: 40px;
-  }
-  .navbar-logo {
-    width: 36px;
-    height: 36px;
-  }
-  .navbar-brand {
-    font-size: 0.95rem;
-  }
-  .navbar-user {
-    display: none;
-  }
-  .theme-toggle {
-    width: 38px;
-    height: 38px;
-  }
-  .logout-btn {
-    width: 38px;
-    height: 38px;
-    padding: 0;
-  }
-  .logout-btn span {
-    display: none;
+  .auth-card {
+    padding: 1.75rem 1.35rem;
+    border-radius: 20px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 420px) {
   .navbar {
-    padding: 0 0.75rem;
+    padding: 0 0.65rem;
   }
-  .navbar-brand span {
+  .navbar-left,
+  .navbar-right {
+    gap: 0.45rem;
+  }
+  .main-content {
+    padding: 1rem 0.7rem 2rem;
+  }
+
+  .dashboard-hero h1 {
+    font-size: 1.9rem;
+  }
+  .dashboard-hero-content > p {
+    font-size: 0.76rem;
+  }
+  .dashboard-visual {
+    min-height: 280px;
+  }
+  .dashboard-visual-card {
+    width: 92%;
+    padding: 17px;
+  }
+  .visual-card-amount {
+    font-size: 1.7rem;
+  }
+  .visual-chart {
+    height: 70px;
+    gap: 5px;
+  }
+  .orbit-one {
     display: none;
   }
+  .orbit-two {
+    display: none;
+  }
+  .floating-stat {
+    min-width: 92px;
+    padding: 7px 8px;
+    font-size: 0.56rem;
+  }
+  .floating-stat strong {
+    font-size: 0.68rem;
+  }
+
+  .summary-card {
+    padding: 0.85rem;
+  }
+  .card-icon {
+    width: 38px;
+    height: 38px;
+  }
+  .card-content h2,
+  .card-content h3 {
+    font-size: 1rem;
+  }
+
+  .spending-focus-card {
+    padding: 0.9rem;
+  }
+  .recent-expenses-card,
+  .dashboard-add-expense {
+    padding: 0.9rem;
+  }
+
+  .expenses-page-header h1 {
+    font-size: 1.65rem;
+  }
+  .expenses-form-card,
+  .expenses-list-section {
+    padding: 0.9rem;
+  }
+
+  .analytics-hero {
+    padding: 1.25rem;
+  }
+  .analytics-hero h1 {
+    font-size: 1.7rem;
+  }
+  .analytics-summary-stats {
+    grid-template-columns: 1fr;
+  }
+  .analytics-chart-card,
+  .analytics-insights-card,
+  .analytics-ai-card {
+    padding: 1rem;
+  }
+
+  .auth-card {
+    padding: 1.5rem 1.1rem;
+  }
+  .auth-header h1 {
+    font-size: 1.65rem;
+  }
 }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -3312,5 +3387,279 @@ button {
   }
   .auth-header h1 {
     font-size: 1.7rem;
+  }
+}
+
+/* ==================== MOBILE LAYOUT FIXES ==================== */
+/* Keep grid/flex children inside their parent and prevent horizontal overflow. */
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-width: 100%;
+}
+
+.main-content,
+.dashboard,
+.dashboard-section,
+.dashboard-bottom-grid,
+.expenses-page,
+.analytics-page,
+.analytics-main-grid,
+.analytics-bottom-grid,
+.analytics-chart-card,
+.analytics-insights-card,
+.analytics-ai-card,
+.analytics-hero,
+.spending-focus-card,
+.recent-expenses-card,
+.dashboard-add-expense {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Remove the fixed analytics card width that can push the page wider than a phone. */
+.analytics-chart-card {
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .sidebar-active .main-content {
+    margin-left: 0;
+  }
+
+  .analytics-bottom-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .analytics-main-grid,
+  .dashboard-bottom-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --navbar-height: 68px;
+  }
+
+  .navbar {
+    width: 100%;
+    min-width: 0;
+    padding-inline: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .navbar-left,
+  .navbar-right {
+    min-width: 0;
+    gap: 0.45rem;
+  }
+
+  .navbar-brand {
+    min-width: 0;
+  }
+
+  .sidebar {
+    top: var(--navbar-height);
+    height: calc(100dvh - var(--navbar-height));
+    max-width: min(280px, 85vw);
+  }
+
+  .sidebar-overlay {
+    top: var(--navbar-height);
+    height: calc(100dvh - var(--navbar-height));
+  }
+
+  .main-content {
+    width: 100%;
+    margin-left: 0 !important;
+    padding: 1.35rem 1rem 2.5rem;
+  }
+
+  .dashboard-hero,
+  .analytics-hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .dashboard-visual {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .dashboard-orbit.orbit-two {
+    max-width: 100%;
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .expenses-page,
+  .analytics-page {
+    width: 100%;
+    padding: 1.25rem 1rem;
+  }
+
+  .expenses-page-header,
+  .analytics-toolbar {
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+
+  .expenses-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .analytics-hero {
+    padding: 1.5rem;
+  }
+
+  .analytics-chart-card,
+  .analytics-insights-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .analytics-chart {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .analytics-ai-input {
+    min-width: 0;
+  }
+
+  .analytics-ai-input input {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-hero h1 {
+    overflow-wrap: anywhere;
+    font-size: clamp(1.8rem, 8vw, 2.2rem);
+  }
+
+  .dashboard-visual {
+    min-height: 270px;
+  }
+
+  .dashboard-visual-card {
+    width: min(100% - 1.5rem, 360px);
+    padding: 1rem;
+  }
+
+  .floating-stat-one {
+    left: 0.25rem;
+  }
+
+  .floating-stat-two {
+    right: 0.25rem;
+  }
+
+  .summary-grid,
+  .spending-focus-list,
+  .expenses-card-grid,
+  .analytics-main-grid,
+  .analytics-bottom-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dashboard-section-header {
+    align-items: flex-start;
+  }
+
+  .expenses-page-header h1,
+  .analytics-hero h1 {
+    overflow-wrap: anywhere;
+  }
+
+  .expenses-form-overlay {
+    top: var(--navbar-height);
+    height: calc(100dvh - var(--navbar-height));
+    padding: 0.75rem;
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  .expenses-form-card {
+    max-height: none;
+    margin-block: 0.25rem;
+  }
+
+  .expenses-form-grid,
+  .expense-form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .expenses-field-full,
+  .expenses-form-actions,
+  .form-group.full-width,
+  .add-btn {
+    grid-column: 1 / -1;
+  }
+
+  .analytics-hero-meta {
+    flex-wrap: wrap;
+  }
+
+  .analytics-periods {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .analytics-periods button {
+    flex: 1 0 auto;
+  }
+
+  .analytics-ai-input {
+    align-items: stretch;
+  }
+
+  .analytics-ai-input button {
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .navbar {
+    padding-inline: 0.5rem;
+  }
+
+  .navbar-left,
+  .navbar-right {
+    gap: 0.3rem;
+  }
+
+  .main-content,
+  .expenses-page,
+  .analytics-page {
+    padding-inline: 0.7rem;
+  }
+
+  .dashboard-hero h1 {
+    font-size: 1.75rem;
+    letter-spacing: -0.8px;
+  }
+
+  .analytics-hero {
+    padding: 1rem;
+  }
+
+  .analytics-chart-card,
+  .analytics-insights-card,
+  .analytics-ai-card {
+    padding: 0.85rem;
   }
 }
